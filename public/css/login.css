@@ -1,0 +1,60 @@
+.login-container {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    padding: 25px;
+    background-color: rgb(247, 246, 242);
+    font-family: "Roboto Slab", serif;
+}
+
+.login-container div {
+    width: 100%;
+}
+
+.login-container .login-header {
+    color: grey;
+    font-weight: bold;
+    margin: 25px;
+}
+
+.login-container .separator {
+    width: 85%;
+    margin: 0 auto;
+    border: 1px solid white;
+}
+
+.login-container .login-fields {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border: 1px solid lightgray;
+}
+
+.login-container .login-fields .separator {
+    border: 1px solid lightgray;
+}
+
+.login-container .login-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.login-container .login-form .login-fields input {
+    height: 25px;
+    border: none;
+}
+
+.login-container .login-form .input {
+    border: none;
+}
+
+.login-container .login-btn {
+    height: 50px;
+    margin-top: 25px;
+    font-size: 20px;
+    color: white;
+    background-color: gold;
+}

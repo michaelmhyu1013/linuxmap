@@ -15,7 +15,7 @@ let locationRoutes = require('./routes/location');
 app.use(express.static(path.join(__dirname,'public')));
 
 app.get('/', function (req,res) {
-    res.send("This is location tracer app");
+    res.sendFile(path.join(__dirname, 'views', 'map.html'));
 });
 
 app.use(locationRoutes);
