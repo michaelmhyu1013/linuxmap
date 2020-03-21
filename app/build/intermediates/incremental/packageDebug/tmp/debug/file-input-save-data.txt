@@ -1,0 +1,7 @@
+#Internal package file, do not edit.
+#Fri Mar 20 17:19:26 PDT 2020
+0.baseType=DIRECTORY
+0.base=C\:\\Users\\ameer\\Desktop\\Android\\linuxmap\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+0.path=classes.dex
+0.set=DEX
+count=1
