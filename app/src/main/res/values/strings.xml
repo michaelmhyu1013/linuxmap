@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">COMP 4985 - Assignmen3</string>
+    <string name="app_name">COMP 4985 - Assignment3</string>
     <string name="connectStr">Connect</string>
     <string name="ip_addressStr">Host</string>
+    <string name="port">Port</string>
     <string name="your_nameStr">Your name</string>
 
     <string name="send">Start Sending</string>

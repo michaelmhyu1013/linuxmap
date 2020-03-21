@@ -21,11 +21,12 @@
         android:id="@+id/ipAddressTextBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="40dp"
         android:ems="10"
         android:hint="@string/ip_addressStr"
         android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameTextBox" />
 
@@ -33,13 +34,32 @@
         android:id="@+id/usernameTextBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
         android:layout_marginTop="50dp"
-        android:ems="10"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:ems="17"
         android:hint="@string/your_nameStr"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/portTextEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        android:ems="5"
+        android:hint="@string/port"
+        android:inputType="numberSigned|textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.845"
+        app:layout_constraintStart_toEndOf="@+id/ipAddressTextBox"
+        app:layout_constraintTop_toBottomOf="@+id/usernameTextBox" />
 
     <Button
         android:id="@+id/sendBtn"
@@ -62,4 +82,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sendBtn" />
+
 </android.support.constraint.ConstraintLayout>

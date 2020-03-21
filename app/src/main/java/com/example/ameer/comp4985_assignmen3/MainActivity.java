@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
     EditText userName;
     String userNameStr;
     EditText hostName;
+    EditText portInput;
     String hostNameStr;
+    int portInputInt;
     Button connectBtn;
     TCPClient client;
     UserInformation userInfo;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         userName = findViewById(R.id.usernameTextBox);
         hostName = findViewById(R.id.ipAddressTextBox);
         connectBtn = findViewById(R.id.connectBtn);
-
+        portInput = findViewById(R.id.portTextEdit);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
@@ -78,10 +80,11 @@ public class MainActivity extends AppCompatActivity {
     public void startConnection(View view) throws IOException {
         hostNameStr = hostName.getText().toString();
         userNameStr = userName.getText().toString();
+        portInputInt = Integer.parseInt(portInput.getText().toString());
         userInfo = new UserInformation(userNameStr);
         //client = new TCPClient("192.168.1.134", 9000);
-        client = new TCPClient("198.47.45.237", 9000);
-        //client = new TCPClient(hostNameStr, 9000);
+        //client = new TCPClient("198.47.45.237", 9000);
+        client = new TCPClient(hostNameStr, portInputInt);
         isConnected = true;
     }
 

@@ -738,6 +738,7 @@ id packed
 id parent
 id parentPanel
 id percent
+id portTextEdit
 id progress_circular
 id progress_horizontal
 id radio
@@ -885,6 +886,7 @@ string app_name
 string connectStr
 string disconnect
 string ip_addressStr
+string port
 string search_menu_title
 string send
 string status_bar_notification_info_overflow
