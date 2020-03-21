@@ -24,8 +24,8 @@ var server = net.createServer(function(socket) {
 
 		try {
 			let myObj = JSON.parse(data);
+			myObj.userIP=socket.remoteAddress;
 			console.log(myObj);
-			console.log(myObj.latitude);
 
 			// Write data into file
 			locationList.push(myObj);
@@ -38,14 +38,10 @@ var server = net.createServer(function(socket) {
 		}
 	})
 
-	socket.on('connection', (data) => {
-		console.log('Client connected to this server ');
-    });
+	// socket.on('connection', (data) => {
+	// 	console.log('Client connected to this server ');
+    // });
     
-    socket.on('connection', (data) => {
-		console.log('Client connected to this server ');
-	});
-
 	socket.on('end', socket.end);
 
 	socket.on('close', function() {
