@@ -56,7 +56,8 @@ public class TCPClient {
                     try {
                         outToServer = clientSocket.getOutputStream();
                         DataOutputStream out = new DataOutputStream (outToServer);
-                        out.writeUTF(clientStr);
+                        out.write(clientStr.getBytes());
+                        //out.writeUTF(clientStr);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
