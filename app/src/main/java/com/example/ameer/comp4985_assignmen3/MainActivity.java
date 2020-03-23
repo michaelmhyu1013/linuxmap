@@ -27,6 +27,35 @@ import java.util.TimeZone;
 
 import static android.location.Location.distanceBetween;
 
+
+/*------------------------------------------------------------------------------------------------------------------
+-- SOURCE FILE: MainActivity.java - This application connects an android smart-phone to a remote TCP server to send
+--                                  information about the device's locations and updates
+--
+--
+-- PROGRAM: COMP4985 Assignment3 - Android
+--
+-- MTHODS:
+-- protected void onCreate(Bundle savedInstanceState)
+-- public void startConnection(View view)
+-- public void terminateConnection(View view)
+-- public void startSending(View view)
+-- public void stopSending(View view)
+-- public void getUpdatedLongLat()
+-- private String getJSON()
+-- private void sendWrapper (String str)
+--
+-- DATE: March 22, 2020
+--
+--
+-- DESIGNER: Amir Kbah
+--
+-- PROGRAMMER: Amir Kbah
+--
+-- NOTES: An android application that will track the user's phone movement and report the
+--        longitude, latitude, timestamp and name of user to a remote server to display
+--        the user's movements on a google map's fragment on a remote website
+----------------------------------------------------------------------------------------------------------------------*/
 public class MainActivity extends AppCompatActivity {
     public EditText userName;
     public String userNameStr;
@@ -48,6 +77,26 @@ public class MainActivity extends AppCompatActivity {
     double longitude;
     double latitude;
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: onCreate
+    --
+    -- DATE: March 22, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: protected void onCreate(Bundle savedInstanceState)
+    --
+    -- RETURNS: void.
+    --
+    -- PARAMETERS:
+    -- Bundle savedInstanceState - the saved instance of the application when the application resumes
+    --
+    -- NOTES:
+    -- This method is called when the activity is created in Android and it marks the entry point to the application
+    -- in it, we initialize all the differnt UI elements and location listener
+    ----------------------------------------------------------------------------------------------------------------------*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +120,7 @@ public class MainActivity extends AppCompatActivity {
         sendBtn.setEnabled(false);
         stopBtn.setEnabled(false);
 
-
-
-
-
+        //Initialize the location manager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
@@ -84,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
+        //initialize the location listener
         locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
                 longitude = location.getLongitude();
@@ -102,7 +149,28 @@ public class MainActivity extends AppCompatActivity {
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
     }
 
-
+    /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: startConnection
+    --
+    -- DATE: March 22, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: public void startConnection(View view)
+    --
+    -- RETURNS: void.
+    --
+    -- PARAMETERS:
+    -- View view - the view that this method is attached to
+    --
+    -- NOTES:
+    -- This method is called when the user presses the "CONNECT" button, it checks the fields to ensure there are no empty
+    -- fields and then it creates a TCPCLient instance and calls the connectToServer method of the TCP client. The connection
+    -- is made on a separate thead to avoid freezing the application in case of prolonged/slow connection or if the IP:PORT
+    -- are incorrect which can cause the Socket to hang for while when trying to connect.
+    ----------------------------------------------------------------------------------------------------------------------*/
     public void startConnection(View view) throws IOException, InterruptedException {
         hostNameStr = hostName.getText().toString();
         userNameStr = userName.getText().toString();
@@ -113,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
             isConnected = false;
             return;
         }
+
         portInputInt = Integer.parseInt(portStr);
         userInfo = new UserInformation(userNameStr);
         connectBtn.setText("Connecting...");
@@ -136,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
                             sendBtn.setEnabled(true);
                             disconnectBtn.setEnabled(true);
                         } else {
-
                             Toast.makeText(MainActivity.this, "Failed to connect\nPlease check IP/PORT", Toast.LENGTH_LONG).show();
                             connectBtn.setEnabled(true);
                             connectBtn.setText("Connect");
@@ -151,6 +219,27 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
     }
 
+
+    /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: terminateConnection
+    --
+    -- DATE: March 22, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: public void terminateConnection(View view)
+    --
+    -- RETURNS: void.
+    --
+    -- PARAMETERS:
+    -- View view - the view that this method is attached to
+    --
+    -- NOTES:
+    -- This method is called when the user presses the "DISCONNECT" button. it calls the client's disconnectFromServer method
+    -- and sets isConnected to false as well as set the values of buttons and disable the send button and stop buttons
+    ----------------------------------------------------------------------------------------------------------------------*/
     public void terminateConnection(View view) throws IOException {
         client.disconnectFromServer();
         isConnected = false;
@@ -160,6 +249,28 @@ public class MainActivity extends AppCompatActivity {
         connectBtn.setText("Connect");
     }
 
+
+    /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: startSending
+    --
+    -- DATE: March 22, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: public void startSending(View view)
+    --
+    -- RETURNS: void.
+    --
+    -- PARAMETERS:
+    -- View view - the view that this method is attached to
+    --
+    -- NOTES:
+    -- This method is called when the user presses the "START SENDING" button. it starts a new thread that checks the position
+    -- of the device and sends updates to server when the difference between previous update and current update is greater than
+    -- 3 meters
+    ----------------------------------------------------------------------------------------------------------------------*/
     public void startSending(View view) throws IOException {
         sendBtn.setText("Sending");
         sendBtn.setEnabled(false);
@@ -191,6 +302,27 @@ public class MainActivity extends AppCompatActivity {
         thread.start();
     }
 
+
+    /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: stopSending
+    --
+    -- DATE: March 22, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: public void terminateConnection(View view)
+    --
+    -- RETURNS: void.
+    --
+    -- PARAMETERS:
+    -- View view - the view that this method is attached to
+    --
+    -- NOTES:
+    -- This method is called when the user presses the "DISCONNECT" button. it calls the client's disconnectFromServer method
+    -- and sets isConnected to false as well as set the values of buttons and disable the send button and stop buttons
+    ----------------------------------------------------------------------------------------------------------------------*/
     public void stopSending(View view) {
         sendBtn.setText("Start Sending");
         stopBtn.setEnabled(false);
@@ -198,6 +330,25 @@ public class MainActivity extends AppCompatActivity {
         isSending = false;
     }
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: getUpdatedLongLat
+    --
+    -- DATE: March 22, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: public void getUpdatedLongLat()
+    --
+    -- RETURNS: void.
+    --
+    -- PARAMETERS:
+    -- none
+    --
+    -- NOTES:
+    -- This method gets the latitude and longitude of the device and updates the longitude and latitude instance variables
+    ----------------------------------------------------------------------------------------------------------------------*/
     public void getUpdatedLongLat(){
         longitude = 0;
         latitude = 0;
@@ -212,6 +363,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: getJSON
+    --
+    -- DATE: March 22, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: private String getJSON()
+    --
+    -- RETURNS: string - the JSON string to be sent to the server.
+    --
+    -- PARAMETERS:
+    -- none
+    --
+    -- NOTES:
+    -- This method returns a string in JSON format which contains the data about the current longitude nad latitude, timestamp,
+    -- and name of the user. The method first updates the longitude and latitude then gets the timestamp, then updates the
+    -- userInfo object and converts it into a JSON object string
+    ----------------------------------------------------------------------------------------------------------------------*/
     private String getJSON(){
         getUpdatedLongLat();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss a");
@@ -223,6 +395,26 @@ public class MainActivity extends AppCompatActivity {
         return gson.toJson(userInfo);
     }
 
+    /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: sendWrapper
+    --
+    -- DATE: March 22, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: private void sendWrapper()
+    --
+    -- RETURNS: void.
+    --
+    -- PARAMETERS:
+    -- String str - the JSON string to send to the TCP server
+    --
+    -- NOTES:
+    -- This is a helper private method. It is used to call the TCPClient's sendToServer method. The wrapper is needed since
+    -- the sendToServer method may throw an dexception and calling this function will always require a try/catch block.
+    ----------------------------------------------------------------------------------------------------------------------*/
     private void sendWrapper (String str){
         try {
             client.sendToServer(str);
