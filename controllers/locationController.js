@@ -1,24 +1,48 @@
 let mod = require('../models/locationProcessor');
 
+/*------------------------------------------------------------------------------------------------------------------
+-- FUNCTION: getLocations
+--
+-- DATE: March 23, 2020
+--
+-- REVISIONS: N/A
+--
+-- DESIGNER: Peter Xiong
+--
+-- PROGRAMMER: Peter Xiong
+--
+-- INTERFACE:       getLocations()
+--
+-- RETURNS: void.
+-- 
+-- NOTES:
+-- Get locations information from json file. Use can use fetch command to get data from server and 
+-- display them in application.
+----------------------------------------------------------------------------------------------------------------------*/
 exports.getLocations = function(req,res,next) {
     let Locations = mod.get();
-    // Locations.then((datas) => {
-    //     // Create context Object with 'usersData' key to protext security info
-    //     const context = {
-    //         usersData: datas.map(data => {
-    //         return {
-    //             latitude: data.latitude,
-    //             longitude: data.longitude,
-    //             timeStamp: data.timeStamp
-    //         }
-    //         })
-    //     }
-    //     res.send(context.usersData);
-    // });
+
     res.send(Locations);
-    console.log("Get location...");
 }
 
+/*------------------------------------------------------------------------------------------------------------------
+-- FUNCTION: saveLocation
+--
+-- DATE: March 23, 2020
+--
+-- REVISIONS: N/A
+--
+-- DESIGNER: Peter Xiong
+--
+-- PROGRAMMER: Peter Xiong
+--
+-- INTERFACE:       saveLocation()
+--
+-- RETURNS: void.
+-- 
+-- NOTES:
+-- This is API used to save location into json file. Use can use POST method to save data into json file.
+----------------------------------------------------------------------------------------------------------------------*/
 exports.saveLocation = function(req,res,next) {
     let p_lat = req.body.latitude;
     let p_long = req.body.longitude;
@@ -32,9 +56,9 @@ exports.saveLocation = function(req,res,next) {
  
     mod.add(pOject)
       .then(item => {
-        res.send("Location saved to database");
+        res.send("Data saved successfully");
       })
       .catch(err => {
-        res.status(400).send("unable to save to database");
+        res.status(400).send("Error: fail to save!");
       });
 }
