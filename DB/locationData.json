@@ -1,1 +1,32 @@
-{"locations":[{"timeStamp":"05:27:17 PM","userLatitude":37.370000000002,"userLongitude":-122.08400000000002,"userName":"Amir","userIP":"::ffff:127.0.0.1"}]}
+{
+    "locations": [
+        {
+            "timeStamp": "05:27:17 PM",
+            "userLatitude": 37.370000000002,
+            "userLongitude": -122.08400000000002,
+            "userName": "Michael",
+            "userIP": "::ffff:127.0.0.1"
+        },
+        {
+            "timeStamp": "05:27:17 PM",
+            "userLatitude": 38.370000000002,
+            "userLongitude": -123.08400000000002,
+            "userName": "Michael",
+            "userIP": "::ffff:127.0.0.1"
+        },
+        {
+            "timeStamp": "05:27:17 PM",
+            "userLatitude": 39.370000000002,
+            "userLongitude": -124.08400000000002,
+            "userName": "Michael",
+            "userIP": "::ffff:127.0.0.1"
+        },
+        {
+            "timeStamp": "05:27:17 PM",
+            "userLatitude": 40.370000000002,
+            "userLongitude": -125.08400000000002,
+            "userName": "Michael",
+            "userIP": "::ffff:127.0.0.1"
+        }
+    ]
+}
