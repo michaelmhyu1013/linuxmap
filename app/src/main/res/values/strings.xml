@@ -7,4 +7,5 @@
 
     <string name="send">Start Sending</string>
     <string name="disconnect">Disconnect</string>
+    <string name="stop_sending">Stop Sending</string>
 </resources>

@@ -28,7 +28,8 @@
         android:hint="@string/ip_addressStr"
         android:inputType="text"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/usernameTextBox" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameTextBox"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/usernameTextBox"
@@ -44,7 +45,8 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/portTextEdit"
@@ -59,16 +61,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.845"
         app:layout_constraintStart_toEndOf="@+id/ipAddressTextBox"
-        app:layout_constraintTop_toBottomOf="@+id/usernameTextBox" />
+        app:layout_constraintTop_toBottomOf="@+id/usernameTextBox"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/sendBtn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginLeft="50dp"
         android:layout_marginTop="25dp"
         android:onClick="startSending"
         android:text="@string/send"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/connectBtn" />
 
@@ -82,5 +86,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sendBtn" />
+
+    <Button
+        android:id="@+id/stopBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginRight="50dp"
+        android:onClick="stopSending"
+        android:text="@string/stop_sending"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/connectBtn" />
 
 </android.support.constraint.ConstraintLayout>

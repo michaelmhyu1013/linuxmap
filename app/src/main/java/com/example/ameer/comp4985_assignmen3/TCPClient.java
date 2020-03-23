@@ -1,6 +1,9 @@
 package com.example.ameer.comp4985_assignmen3;
 
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -14,14 +17,15 @@ public class TCPClient {
     String hostName;
     int port;
     Socket clientSocket;
-
+    boolean isConnected;
     public TCPClient (String hostName, int port) throws IOException {
         this.hostName = hostName;
         this.port = port;
-        connectToServer();
+        isConnected = true;
     }
 
-    public void connectToServer() throws IOException {
+    public boolean connectToServer(final Context context) throws IOException, InterruptedException {
+
         Runnable runnable = new Runnable () {
             public void run() {
                 try {
@@ -29,15 +33,18 @@ public class TCPClient {
                     IPAddress = InetAddress.getByName(hostName);
                     clientSocket = new Socket(IPAddress, port);
                 } catch (UnknownHostException e) {
+                    isConnected = false;
                     e.printStackTrace();
                 } catch (IOException e) {
+                    isConnected = false;
                     e.printStackTrace();
                 }
             }
         };
         Thread thread = new Thread (runnable);
         thread.start();
-
+        thread.join();
+        return isConnected;
     }
 
     public void disconnectFromServer() throws IOException {

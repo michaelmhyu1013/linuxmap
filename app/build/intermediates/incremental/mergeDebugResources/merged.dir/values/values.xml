@@ -1607,6 +1607,7 @@
     <string name="search_menu_title">Search</string>
     <string name="send">Start Sending</string>
     <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="stop_sending">Stop Sending</string>
     <string name="your_nameStr">Your name</string>
     <style name="AlertDialog.AppCompat" parent="Base.AlertDialog.AppCompat"/>
     <style name="AlertDialog.AppCompat.Light" parent="Base.AlertDialog.AppCompat.Light"/>
@@ -1614,7 +1615,7 @@
     <style name="Animation.AppCompat.DropDownUp" parent="Base.Animation.AppCompat.DropDownUp"/>
     <style name="Animation.AppCompat.Tooltip" parent="Base.Animation.AppCompat.Tooltip"/>
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        
         <item name="colorPrimary">#850000</item>
         <item name="colorPrimaryDark">#570000</item>
         <item name="colorAccent">@color/colorAccent</item>
