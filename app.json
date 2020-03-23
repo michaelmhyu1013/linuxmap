@@ -1,0 +1,8 @@
+{
+    "name": "Location Tracer",
+    "description": "This project is to trace my location by record/retrieve data",
+    "repository": "https://github.com/PeterX-Dev/locationTracer.git",
+    "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
+    "keywords": ["node", "express", "heroku"],
+    "image": "heroku/nodejs"
+}

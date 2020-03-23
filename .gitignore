@@ -29,6 +29,10 @@ local.properties
 
 # OS-specific files
 .DS_Store
+/build
+/captures
+.externalNativeBuild
+/node_modules
 .DS_Store?
 ._*
 .Spotlight-V100
