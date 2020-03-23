@@ -738,6 +738,7 @@ id packed
 id parent
 id parentPanel
 id percent
+id portTextEdit
 id progress_circular
 id progress_horizontal
 id radio
@@ -773,6 +774,7 @@ id src_in
 id src_over
 id standard
 id start
+id stopBtn
 id submenuarrow
 id submit_area
 id tabMode
@@ -885,9 +887,11 @@ string app_name
 string connectStr
 string disconnect
 string ip_addressStr
+string port
 string search_menu_title
 string send
 string status_bar_notification_info_overflow
+string stop_sending
 string your_nameStr
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
