@@ -53,7 +53,37 @@ function getLocations() {
     return locationList;
 }
 
+/*------------------------------------------------------------------------------------------------------------------
+-- FUNCTION: resetLocations
+--
+-- DATE: March 23, 2020
+--
+-- REVISIONS: N/A
+--
+-- DESIGNER: Peter Xiong
+--
+-- PROGRAMMER: Peter Xiong
+--
+-- INTERFACE:       resetLocations()
+--
+-- RETURNS: void.
+-- 
+-- NOTES:
+-- Reset locations information from json file. 
+----------------------------------------------------------------------------------------------------------------------*/
+function resetLocations() {
+    let output={"locations": []};
+    fs.writeFileSync(dBFilePath1,JSON.stringify(output));
+    
+    let rawdata = fs.readFileSync(dBFilePath1);
+    let locationObj = JSON.parse(rawdata);
+    let locationList = locationObj.locations;
+
+    return locationList;
+}
+
 module.exports = {
     add : addLocation,
-    get : getLocations
+    get : getLocations,
+    reset: resetLocations
 }
