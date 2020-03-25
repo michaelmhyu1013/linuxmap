@@ -8,4 +8,8 @@
     <string name="send">Start Sending</string>
     <string name="disconnect">Disconnect</string>
     <string name="stop_sending">Stop Sending</string>
+    <string name="current_data">Current Data:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="latitude">Latitude:</string>
+    <string name="timestamp">Timestamp:</string>
 </resources>
