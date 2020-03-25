@@ -7,15 +7,28 @@ var rawdata = fs.readFileSync(dBFilePath);
 var locationObj = JSON.parse(rawdata);
 var locationList = locationObj.locations;
 
-console.log(locationList);
-
+/*------------------------------------------------------------------------------------------------------------------
+-- FUNCTION: net.createServer
+--
+-- DATE: March 23, 2020
+--
+-- REVISIONS: N/A
+--
+-- DESIGNER: Peter Xiong
+--
+-- PROGRAMMER: Peter Xiong
+--
+-- INTERFACE:       net.createServer(function(socket))
+--
+-- RETURNS: void.
+-- 
+-- NOTES:
+-- Create TCP server, which responses to TCP client request to set up a communication channel.
+----------------------------------------------------------------------------------------------------------------------*/
 var server = net.createServer(function(socket) {
-	//var respData = "HTTP/1.1 200 OK\r\n\r\nHello"
-	//socket.write('Echo server\r\n');
-    //socket.pipe(socket);
-       
-	socket.setTimeout(10000, function() {
-        socket.end('10 seconds passed, closing the socket\r\n');
+
+	socket.setTimeout(300000, function() {
+        socket.end('5 minutes passed, closing the socket\r\n');
         socket.destroy();
 	});
 
@@ -33,15 +46,10 @@ var server = net.createServer(function(socket) {
 			let output={"locations":locationList};
 			fs.writeFileSync(dBFilePath,JSON.stringify(output));
 		} catch (error) {
-			console.log("Something wrong, catch error here!");
-//            console.log(error);
+            console.log(error);
 		}
 	})
-
-	// socket.on('connection', (data) => {
-	// 	console.log('Client connected to this server ');
-    // });
-    
+   
 	socket.on('end', socket.end);
 
 	socket.on('close', function() {
