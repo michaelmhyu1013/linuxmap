@@ -135,12 +135,13 @@ const segregateDataForEachUser = data => {
 -- be set onto the map that is passed in.
 ----------------------------------------------------------------------------------------------------------------------*/
 const addUserPathToMap = (map, path) => {
+    const strokeColor = "#" + ((Math.random() * 0xffffff) << 0).toString(16); // generate random hex color
     path.forEach(location => {
-        createMarker(map, location);
+        createMarker(map, location, strokeColor);
     });
     const userPath = new google.maps.Polyline({
         path: path,
-        strokeColor: "#" + ((Math.random() * 0xffffff) << 0).toString(16), // generate random hex color
+        strokeColor: strokeColor,
         strokeOpacity: 1.0,
         strokeWeight: 2,
     });
@@ -170,7 +171,7 @@ const addUserPathToMap = (map, path) => {
 -- and longitude. The marker will then be drawn to the map and an InfoWindow containing the information of the location.
 -- The fields described will be the username, the latitude, the longitude, and the timestamp for the location.
 ----------------------------------------------------------------------------------------------------------------------*/
-const createMarker = (map, location) => {
+const createMarker = (map, location, hexColorString) => {
     const info =
         `<div><h3>User: ${location.user}</h3>` +
         `<br>Timestamp: ${location.time}` +
@@ -179,6 +180,15 @@ const createMarker = (map, location) => {
 
     const marker = new google.maps.Marker({
         position: new google.maps.LatLng(location.lat, location.lng),
+        icon: {
+            path: google.maps.SymbolPath.CIRCLE,
+            fillColor: hexColorString,
+            fillOpacity: 0.6,
+            strokeColor: "FFF",
+            strokeOpacity: 0.9,
+            strokeWeight: 1,
+            scale: 2,
+        },
     });
     const infowindow = new google.maps.InfoWindow({
         content: info,
