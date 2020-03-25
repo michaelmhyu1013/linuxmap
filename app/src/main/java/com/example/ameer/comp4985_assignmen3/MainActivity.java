@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Looper;
-import android.os.strictmode.CleartextNetworkViolation;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,17 +13,13 @@ import android.widget.EditText;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
-
 import static android.location.Location.distanceBetween;
 
 
@@ -35,13 +30,15 @@ import static android.location.Location.distanceBetween;
 --
 -- PROGRAM: COMP4985 Assignment3 - Android
 --
--- MTHODS:
+-- METHODS:
 -- protected void onCreate(Bundle savedInstanceState)
+-- INTERFACE: private void initLocationListener()
 -- public void startConnection(View view)
 -- public void terminateConnection(View view)
 -- public void startSending(View view)
 -- public void stopSending(View view)
 -- public void getUpdatedLongLat()
+-- private void updateLabels(final double lng, final double lat, final String timeStamp)
 -- private String getJSON()
 -- private void sendWrapper (String str)
 --
@@ -67,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
     Button disconnectBtn;
     Button sendBtn;
     Button stopBtn;
+    TextView longLbl;
+    TextView latLbl;
+    TextView tsLbl;
     TCPClient client;
     UserInformation userInfo;
     boolean isConnected;
@@ -120,11 +120,40 @@ public class MainActivity extends AppCompatActivity {
         sendBtn.setEnabled(false);
         stopBtn.setEnabled(false);
 
+        longLbl = findViewById(R.id.lngLabel);
+        latLbl = findViewById(R.id.latLabel);
+        tsLbl = findViewById(R.id.tsLabel);
+
+        initLocationListener();
+
+    }
+
+    /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: initLocationListener
+    --
+    -- DATE: March 22, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: private void initLocationListener()
+    --
+    -- RETURNS: void.
+    --
+    -- PARAMETERS:
+    -- None
+    --
+    -- NOTES:
+    -- This is a helper method used to initialize a location listener and location manager so that later the application can
+    -- query the phone's location on demand.
+    ----------------------------------------------------------------------------------------------------------------------*/
+    private void initLocationListener(){
         //Initialize the location manager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                        this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
         } else {
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
@@ -245,6 +274,8 @@ public class MainActivity extends AppCompatActivity {
         isConnected = false;
         connectBtn.setEnabled(true);
         disconnectBtn.setEnabled(false);
+        sendBtn.setEnabled(false);
+        sendBtn.setText("Start Sending");
         stopBtn.setEnabled(false);
         connectBtn.setText("Connect");
     }
@@ -272,15 +303,15 @@ public class MainActivity extends AppCompatActivity {
     -- 3 meters
     ----------------------------------------------------------------------------------------------------------------------*/
     public void startSending(View view) throws IOException {
-        sendBtn.setText("Sending");
+        sendBtn.setText("Sending...");
         sendBtn.setEnabled(false);
         stopBtn.setEnabled(true);
         final double[] latlng = new double[2];
         latlng[0] = latitude;
         latlng[1] = longitude;
         isSending = true;
-        String json1 = getJSON();
-        sendWrapper(json1);
+        //String json1 = getJSON();
+        //sendWrapper(json1);
         Runnable runnable = new Runnable () {
             public void run() {
                 while (isConnected && isSending) {
@@ -364,6 +395,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /*------------------------------------------------------------------------------------------------------------------
+    -- METHOD: updateLabels
+    --
+    -- DATE: March 25, 2020
+    --
+    -- DESIGNER: Amir Kbah
+    --
+    -- PROGRAMMER: Amir Kbah
+    --
+    -- INTERFACE: private void updateLabels(final double lng, final double lat, final String timeStamp)
+    --
+    -- RETURNS: void
+    --
+    -- PARAMETERS:
+    -- final double lng - Device's longitude
+    -- final double lat - Device's latitude
+    -- final String timeStamp - current time
+    --
+    -- NOTES:
+    -- This method returns a string in JSON format which contains the data about the current longitude nad latitude, timestamp,
+    -- and name of the user. The method first updates the longitude and latitude then gets the timestamp, then updates the
+    -- userInfo object and converts it into a JSON object string
+    ----------------------------------------------------------------------------------------------------------------------*/
+    private void updateLabels(final double lng, final double lat, final String timeStamp) {
+        runOnUiThread(new Runnable() {
+            public void run() {
+                longLbl.setText("" + lng);
+                latLbl.setText("" + lat);
+                tsLbl.setText(timeStamp);
+            }
+        });
+    }
+
+    /*------------------------------------------------------------------------------------------------------------------
     -- METHOD: getJSON
     --
     -- DATE: March 22, 2020
@@ -392,6 +456,7 @@ public class MainActivity extends AppCompatActivity {
         userInfo.setUserLongitude(longitude);
         userInfo.setUserLatitude(latitude);
         Gson gson = new Gson();
+        updateLabels(longitude, latitude, formattedTime);
         return gson.toJson(userInfo);
     }
 

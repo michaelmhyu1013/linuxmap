@@ -6,7 +6,7 @@ package com.example.ameer.comp4985_assignmen3;
 --
 -- PROGRAM: COMP4985 Assignment3 - Android
 --
--- MTHODS:
+-- METHODS:
 -- public UserInformation(String name)
 -- public void setUserLongitude(double longitude)
 -- public void setUserLatitude(double latitude)
