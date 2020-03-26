@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         isConnected = false;
         isSending = false;
-        updateDistance = 10;
+        updateDistance = 100;
 
         //User input parameters
         userName = findViewById(R.id.usernameTextBox);
@@ -313,6 +313,9 @@ public class MainActivity extends AppCompatActivity {
         latlng[1] = longitude;
         isSending = true;
 
+        //Sends the initial location of the device
+        //This line is disabled as testing with emulator makes initial location as last known location
+        //sendWrapper(getJSON());
         Runnable runnable = new Runnable () {
             public void run() {
                 while (isConnected && isSending) {
