@@ -107,6 +107,7 @@ const segregateDataForEachUser = data => {
             lng: locationInfo.userLongitude,
             time: locationInfo.timeStamp,
             user: locationInfo.userName,
+            ip: locationInfo.userIP,
         });
     });
     return pathMaps;
@@ -174,6 +175,7 @@ const addUserPathToMap = (map, path) => {
 const createMarker = (map, location, hexColorString) => {
     const info =
         `<div><h3>User: ${location.user}</h3>` +
+        `<br>IP: ${location.ip}` +
         `<br>Timestamp: ${location.time}` +
         `<br>Latitude: ${location.lat}` +
         `<br>Longitude: ${location.lng}</div>`;
