@@ -184,7 +184,7 @@ const createMarker = (map, location, hexColorString) => {
             path: google.maps.SymbolPath.CIRCLE,
             fillColor: hexColorString,
             fillOpacity: 0.6,
-            strokeColor: "FFF",
+            strokeColor: hexColorString,
             strokeOpacity: 0.9,
             strokeWeight: 1,
             scale: 2,
