@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
     public String userNameStr;
     public EditText hostName;
     public EditText portInput;
+    private int updateDistance;
     String hostNameStr;
     int portInputInt;
     Button connectBtn;
@@ -103,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         isConnected = false;
         isSending = false;
+        updateDistance = 10;
 
         //User input parameters
         userName = findViewById(R.id.usernameTextBox);
@@ -310,8 +312,7 @@ public class MainActivity extends AppCompatActivity {
         latlng[0] = latitude;
         latlng[1] = longitude;
         isSending = true;
-        //String json1 = getJSON();
-        //sendWrapper(json1);
+
         Runnable runnable = new Runnable () {
             public void run() {
                 while (isConnected && isSending) {
@@ -319,7 +320,7 @@ public class MainActivity extends AppCompatActivity {
                     if ((int) latlng[0] != 0 && (int) latlng[1] != 0){
                         float result[] = new float[1];
                         distanceBetween(latitude, longitude, latlng[0], latlng[1], result);
-                        if (result[0] > 3) {
+                        if (result[0] > updateDistance) {
                             sendWrapper(json);
                             latlng[0] = latitude;
                             latlng[1] = longitude;
