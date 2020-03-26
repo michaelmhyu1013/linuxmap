@@ -1,13 +1,9 @@
 package com.example.ameer.comp4985_assignmen3;
 
-
 import android.content.Context;
-import android.widget.Toast;
-
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -17,7 +13,7 @@ import java.net.UnknownHostException;
 --
 -- PROGRAM: COMP4985 Assignment3 - Android
 --
--- MTHODS:
+-- METHODS:
 -- public TCPClient (String hostName, int port)
 -- public boolean connectToServer(final Context context)
 -- public void disconnectFromServer()
@@ -64,7 +60,6 @@ public class TCPClient {
     public TCPClient (String hostName, int port) throws IOException {
         this.hostName = hostName;
         this.port = port;
-        isConnected = true;
     }
 
     /*------------------------------------------------------------------------------------------------------------------
@@ -88,13 +83,13 @@ public class TCPClient {
     -- application.
     ----------------------------------------------------------------------------------------------------------------------*/
     public boolean connectToServer(final Context context) throws IOException, InterruptedException {
-
         Runnable runnable = new Runnable () {
             public void run() {
                 try {
                     //Get by name checks whether an IP or a hostName were provided
                     IPAddress = InetAddress.getByName(hostName);
                     clientSocket = new Socket(IPAddress, port);
+                    isConnected = true;
                 } catch (UnknownHostException e) {
                     isConnected = false;
                     e.printStackTrace();
