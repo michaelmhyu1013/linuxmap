@@ -3,10 +3,6 @@ const fs = require('fs');
 
 const dBFilePath = 'DB/locationData.json';
 
-var rawdata = fs.readFileSync(dBFilePath);
-var locationObj = JSON.parse(rawdata);
-var locationList = locationObj.locations;
-
 /*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: net.createServer
 --
@@ -36,6 +32,11 @@ var server = net.createServer(function(socket) {
 		console.log('Received data from client: ' + data);
 
 		try {
+			// Get previous data from file before adding new data into it.
+			var rawdata = fs.readFileSync(dBFilePath);
+			var locationObj = JSON.parse(rawdata);
+			var locationList = locationObj.locations;
+
 			let myObj = JSON.parse(data);
 			myObj.userIP=socket.remoteAddress;
 			console.log(myObj);

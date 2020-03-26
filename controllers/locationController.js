@@ -26,6 +26,30 @@ exports.getLocations = function(req,res,next) {
 }
 
 /*------------------------------------------------------------------------------------------------------------------
+-- FUNCTION: resetLocations
+--
+-- DATE: March 23, 2020
+--
+-- REVISIONS: N/A
+--
+-- DESIGNER: Peter Xiong
+--
+-- PROGRAMMER: Peter Xiong
+--
+-- INTERFACE:       resetLocations()
+--
+-- RETURNS: void.
+-- 
+-- NOTES:
+-- This is API used to reset location in json file. User can use GET method to reset data in json file.
+----------------------------------------------------------------------------------------------------------------------*/
+exports.resetLocations = function(req,res,next) {
+  let Locations = mod.reset();
+
+  res.send(Locations);
+}
+
+/*------------------------------------------------------------------------------------------------------------------
 -- FUNCTION: saveLocation
 --
 -- DATE: March 23, 2020
@@ -41,7 +65,7 @@ exports.getLocations = function(req,res,next) {
 -- RETURNS: void.
 -- 
 -- NOTES:
--- This is API used to save location into json file. Use can use POST method to save data into json file.
+-- This is API used to save location into json file. User can use POST method to save data into json file.
 ----------------------------------------------------------------------------------------------------------------------*/
 exports.saveLocation = function(req,res,next) {
     let p_lat = req.body.latitude;
